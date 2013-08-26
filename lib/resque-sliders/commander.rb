@@ -22,6 +22,9 @@ module Resque
         def all_hosts
           (hosts + stale_hosts).sort
         end
+        def remove_host(host)
+          Resque.redis.del("#{key_prefix}:#{host}")
+        end
 
         # Return current children count or nil if Host hasn't registered itself.
         def current_children(host)
